@@ -1,24 +1,60 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Axios from 'axios';
+
+
+var API_URL = 'https://official-joke-api.appspot.com/random_joke'
 
 function App() {
+
+  const [joke, setJoke] = useState('') 
+  const [punchline, setPunchline] = useState('') 
+
+  const getAxiosData = () => {
+
+    Axios
+      .get(API_URL)
+      .then((response) => {
+        setJoke(response.data.setup)
+        setPunchline(response.data.punchline)
+      }).catch(e => {
+        console.log(`Error: ${e}`)
+      })
+  }
+
+  const [joke2, setJoke2] = useState('') 
+  const [punchline2, setPunchline2] = useState('') 
+
+  const fetchData = () => {
+
+    fetch(API_URL)
+      .then(response => response.json())
+      .then((data) => {
+        setJoke2(data.setup)
+        setPunchline2(data.punchline)
+      }).catch(e => {
+        console.log(`Error: ${e}`)
+      })
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ul className='grid'>
+        <li className='box tac'>
+          <strong className='title fw:700'>Axios Library</strong>
+          <button className='btn round fw\:700' onClick={getAxiosData}>GetAxiosData()</button>
+          <code>{`Joke: ${joke}`}</code>
+          <code>{`Punchline: ${punchline}`}</code>
+        </li>
+        <li className='box tac'>
+          <strong className='title fw:700'>Fetch</strong>
+          <button className='btn round fw\:700' onClick={fetchData}>FetchData()</button>
+          <code>{`Joke: ${joke2}`}</code>
+          <code>{`Punchline: ${punchline2}`}</code>
+        </li>
+      </ul>
+    </>
   );
 }
 
