@@ -15,6 +15,7 @@ function App() {
     Axios
       .get(API_URL)
       .then((response) => {
+        console.log(response)
         setJoke(response.data.setup)
         setPunchline(response.data.punchline)
       }).catch(e => {
@@ -30,6 +31,7 @@ function App() {
     fetch(API_URL)
       .then(response => response.json())
       .then((data) => {
+        console.log(data)
         setJoke2(data.setup)
         setPunchline2(data.punchline)
       }).catch(e => {
